@@ -1,14 +1,14 @@
-#include "alphtree.h"
+#include "trie.h"
 #include "text.h"
 #include <stdlib.h>  /* calloc */
 
 /*
   Add a word to the tree
 */
-void addWord(const char *word, AlphNode *root)
+void addWord(const char *word, trienode *root)
 {
   int character;
-  AlphNode *node = root;
+  trienode *node = root;
   
   /* if we have an actual word... */
   if (word != NULL)
@@ -21,7 +21,7 @@ void addWord(const char *word, AlphNode *root)
         node = node->children[indexOf(word[character])]; 
       /* Make new node to move to */
       else
-        node = node->children[indexOf(word[character])] = calloc(1, sizeof(AlphNode));  
+        node = node->children[indexOf(word[character])] = calloc(1, sizeof(trienode));  
     }
     /* increment the counter for this word */
     ++(node->count);
@@ -39,12 +39,12 @@ int indexOf(char c)
 
 
 /*
-  Get the count of a certain word in an alphtree rooted at root.
+  Get the count of a certain word in an trie rooted at root.
 */
-unsigned int getCount(const char *word, const AlphNode *root)
+unsigned int getCount(const char *word, const trienode *root)
 {
   int character;
-  const AlphNode *node = root;
+  const trienode *node = root;
   for (character = 0; word[character] != '\0'; ++character)
   {
     if (node->children[indexOf(word[character])] != NULL)
@@ -59,13 +59,13 @@ unsigned int getCount(const char *word, const AlphNode *root)
 /*
   Add the contents of a text file to the word count.  
 */
-AlphNode * countTextFile(const char *path)
+trienode * countTextFile(const char *path)
 {
   const char *word = NULL;   /* The current word */
   Text text = getText(path);
   
   preprocess(&text);
-  AlphNode *count_tree = calloc(1, sizeof(AlphNode));
+  trienode *count_tree = calloc(1, sizeof(trienode));
   
   while ((word = getNextWord(&text)) != NULL) addWord(word, count_tree);
  
@@ -84,7 +84,7 @@ const char characters[N_CHARS] = "abcdefghijklmnopqrstuvwxyz\'";
 /*
   Print word counts to stream, defaulting to stdout.
 */
-void printCounts(FILE *stream, AlphNode *root)
+void printCounts(FILE *stream, trienode *root)
 {
   int i;
   for (i = 0; i < n_chars; ++i)
@@ -100,7 +100,7 @@ void printCounts(FILE *stream, AlphNode *root)
 /*
   Recursively called to print words with > 0 instances.
 */
-void printNode(FILE *stream, const AlphNode *node, char c, int depth)
+void printNode(FILE *stream, const trienode *node, char c, int depth)
 {
   /* Storage for the string we build in our DFS */
   static char stack[64];
@@ -126,7 +126,7 @@ void printNode(FILE *stream, const AlphNode *node, char c, int depth)
 /*
   De-allocate a tree or subtree.
 */
-void freeTree(AlphNode *root)
+void freeTree(trienode *root)
 {
   int i;
   for (i = 0; i < n_chars; ++i)

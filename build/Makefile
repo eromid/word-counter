@@ -6,14 +6,14 @@ SRC_DIR=../src
 
 all: wordcounts
 
-wordcounts: main.o alphtree.o text.o
-	$(CC) $(CFLAGS) -o $(TARGET) main.o alphtree.o text.o
+wordcounts: main.o trie.o text.o
+	$(CC) $(CFLAGS) -o $(TARGET) main.o trie.o text.o
 
-main.o: $(SRC_DIR)/main.c alphtree.o text.o
+main.o: $(SRC_DIR)/main.c trie.o text.o
 	$(CC) $(CFLAGS) -c -o main.o $(SRC_DIR)/main.c 
 
-alphtree.o: $(SRC_DIR)/alphtree.c text.o
-	$(CC) $(CFLAGS) -c -o alphtree.o $(SRC_DIR)/alphtree.c
+trie.o: $(SRC_DIR)/trie.c text.o
+	$(CC) $(CFLAGS) -c -o trie.o $(SRC_DIR)/trie.c
 
 text.o: $(SRC_DIR)/text.c
 	$(CC) $(CFLAGS) -c -o text.o $(SRC_DIR)/text.c

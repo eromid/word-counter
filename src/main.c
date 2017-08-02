@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "alphtree.h"
+#include "trie.h"
 
 /*
   Read a file and print out the number of occurrences of each word.
@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
     return 1;
   }	
 
-  AlphNode *counts_root = countTextFile(argv[1]);
+  trienode *counts_root = countTextFile(argv[1]);
   printCounts(stdout, counts_root);
   freeTree(counts_root);
   return 0;
