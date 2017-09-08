@@ -2,6 +2,8 @@
 
 This small project was inspired by a programming assignment on course I was demonstrating/marking on. The students had to create a program to count the frequency with which each unique word occurs in a file. They were to use a couple of data structures to store the words and associated counts, including IIRC linked lists, arrays and trees. "Trees" here was meant to mean "binary search trees", however as I was currently working with [octrees](https://en.wikipedia.org/wiki/Octree) (think a quadtree but in three dimensions, or a binary tree but with eight children per node vs two), a different interpretation came to mind.
 
+This project is licenced under the terms of the MIT licence.
+
 ## A 27-ary Tree ##
 
 This solution is built around a 27-ary tree, one child node for each letter of the alphabet, plus one for the apostrophe. This concept, it turns out, is known as a [Trie](https://en.wikipedia.org/wiki/Trie).
